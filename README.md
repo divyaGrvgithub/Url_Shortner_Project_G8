@@ -1,4 +1,4 @@
-# titaniumaplus
+# Radium 
 
 ## Scalable URL Shortner Project Requirement
 
@@ -37,13 +37,13 @@ If you haven’t used tinyurl.com before, please try creating a new shortened UR
 ```
 
 ### POST /url/shorten
-- Create a short URL for an original url recieved in the request.
-- The baseUrl must be same for the returned shortUrl. Example if the originalUrl is http://abc.com/user/images/name/2 then the shortened url should be http://abc.com/xyz
+- Create a short URL for an original url recieved in the request body.
+- The baseUrl must be the application's baseUrl. Example if the originalUrl is http://abc.com/user/images/name/2 then the shortened url should be http://localhost:3000/xyz
 - Return the shortened unique url. Refer [this](#url-shorten-response) for the response
 - Ensure the same response is returned for an original url everytime
 - Return HTTP status 400 for an invalid request
 
-### GET /shortUrl
+### GET /:urlCode
 - Redirect to the original URL corresponding
 - Use a valid HTTP status code meant for a redirection scenario.
 - Return a suitable error for a url not found
@@ -75,7 +75,7 @@ If you haven’t used tinyurl.com before, please try creating a new shortened UR
 ```yaml
 {
   status: false,
-  msg: ""
+  message: ""
 }
 ```
 ## Response samples
@@ -84,8 +84,8 @@ If you haven’t used tinyurl.com before, please try creating a new shortened UR
 ```yaml
 {
   "data": {
-    "longUrl": "https://www.abc.com/oneofthelongesturlseverseenbyhumans.com",
-    "shortUrl": "https://www.abc.com/2WlQej2a",
+    "longUrl": "http://www.abc.com/oneofthelongesturlseverseenbyhumans.com",
+    "shortUrl": "http://localhost:3000/2WlQej2a",
     "urlCode": "2WlQej2a"
   } 
 }
