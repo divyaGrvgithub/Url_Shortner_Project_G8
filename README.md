@@ -85,8 +85,8 @@ If you haven’t used tinyurl.com before, please try creating a new shortened UR
 {
   "data": {
     "longUrl": "http://www.abc.com/oneofthelongesturlseverseenbyhumans.com",
-    "shortUrl": "http://localhost:3000/2WlQej2a",
-    "urlCode": "2WlQej2a"
+    "shortUrl": "http://localhost:3000/ghfgfg",
+    "urlCode": "ghfgfg"
   } 
 }
 
