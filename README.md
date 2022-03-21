@@ -1,4 +1,4 @@
-# Radium 
+# Thoriumc
 
 ## Scalable URL Shortner Project Requirement
 
