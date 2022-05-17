@@ -1,4 +1,4 @@
-# Thoriumc
+# Uranium
 
 ## Scalable URL Shortner Project Requirement
 
