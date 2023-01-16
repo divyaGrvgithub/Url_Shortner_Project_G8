@@ -50,7 +50,7 @@ If you haven’t used tinyurl.com before, please try creating a new shortened UR
 - Return HTTP status 400 for an invalid request
 
 ## Testing 
-- To test these apis create a new collection in Postman named Project 4 Url Shortner
+- To test these apis create a new collection in Postman named Project 3 Url Shortner
 - Each api should have a new request in this collection
 - Each request in the collection should be rightly named. Eg  Url shorten, Get Url etc
 - Each member of each team should have their tests in running state
