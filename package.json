@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/sabihak89/californium/issues"
   },
-  "homepage": "https://github.com/sabihak89/californium#readme"
+  "homepage": "https://github.com/sabihak89/californium#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.8.3",
+    "nodemon": "^2.0.20"
+  }
 }

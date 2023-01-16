@@ -5,12 +5,12 @@ const app = express()
 
 app.use(express.json())
 
-mongoose.connect("mongodb+srv://gaurav:Grv20072000@cluster0.3fqqw8s.mongodb.net/groupXDatabase",
+mongoose.connect("mongodb+srv://gaurav:Grv20072000@cluster0.3fqqw8s.mongodb.net/gaurav",
 {
     useNewUrlParser:true
 })
 .then(()=>console.log("Mongodb is connected"))
-.catch((err)=>console.log(err))
+.catch(err=>console.log(err))
 
 app.use("/",route)
 
