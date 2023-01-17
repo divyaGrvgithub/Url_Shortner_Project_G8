@@ -15,7 +15,7 @@ const shortUrl = async function (req, res) {
 
         if (!validUrl.isWebUri(url)) return res.status(400).send({ status: false, message: "invalid Url" })
 
-        let baseUrl = "http://localhost:3000"
+        let baseUrl = "localhost:3000"
         let check = await urlModel.findOne({ longUrl: url })
         if(check){return res.status(200).send({status:true,msg:"Data already exist",check})}
         if (!check) {
@@ -37,18 +37,20 @@ const shortUrl = async function (req, res) {
 
 }
 
-const geturl= async function(req,res){
-    try{
-let url=req.params.urlCode
-
-let LongUrl=await urlModel.findOne({urlCode:url}).select({longUrl:1,_id:0})
-if(!LongUrl){return res.status(404).send({status:false,msg:"can't find any data with this urlcode"})}  
-
- res.status(302).redirect(LongUrl.longUrl)
-
-}catch(err){
-        res.status(500).send({status:false,msg:err.message})
+const getData = async function(req,res){
+    try {
+        let url = req.params
+        console.log(url)
+        // if(!url) return res.status(400).send({status:false, message: "invalid url"})
+        let data = await urlModel.findOne({urlCode: url.urlCode})
+        console.log(data)
+        if(!data) return res.status(404).send({status: false, message: "url is not present"})
+        console.log(data.longUrl)
+        res.status(302).redirect(data.longUrl)
+    } catch (error) {
+        return res.status(500).send({status: false, message: error.message})
     }
+    
 }
 
-module.exports = { shortUrl,geturl}
+module.exports = { shortUrl }
