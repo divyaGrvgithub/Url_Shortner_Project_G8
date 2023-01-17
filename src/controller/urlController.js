@@ -37,20 +37,19 @@ const shortUrl = async function (req, res) {
 
 }
 
-const getData = async function(req,res){
-    try {
-        let url = req.params
-        console.log(url)
-        // if(!url) return res.status(400).send({status:false, message: "invalid url"})
-        let data = await urlModel.findOne({urlCode: url.urlCode})
-        console.log(data)
-        if(!data) return res.status(404).send({status: false, message: "url is not present"})
-        console.log(data.longUrl)
-        res.status(302).redirect(data.longUrl)
-    } catch (error) {
-        return res.status(500).send({status: false, message: error.message})
+
+const geturl= async function(req,res){
+    try{
+let url=req.params.urlCode
+
+let LongUrl=await urlModel.findOne({urlCode:url}).select({longUrl:1,_id:0})
+if(!LongUrl){return res.status(404).send({status:false,msg:"can't find any data with this urlcode"})}  
+
+ res.status(302).redirect(LongUrl.longUrl)
+
+}catch(err){
+        res.status(500).send({status:false,msg:err.message})
     }
-    
 }
 
-module.exports = { shortUrl }
+module.exports = { shortUrl,geturl}
