@@ -1,13 +1,13 @@
 const urlModel = require("../models/urlModel")
 const shortId = require('shortid')
 const validUrl = require('valid-url')
-const redis = require("redis")
+const redis = require('redis')
 const { promisify } = require('util')
 
 
-const redisConnect = redis.createClient(19949, "redis-19949.c305.ap-south-1-1.ec2.cloud.redislabs.com")
+const redisConnect = redis.createClient(11459, "redis-11459.c264.ap-south-1-1.ec2.cloud.redislabs.com")
 
-redisConnect.auth("qCANTJJu9FQtVLa2NNxxCg4JxNe50Uyg", function (err) {
+redisConnect.auth("d76HQLdFXVsQbZ6VlCk4pKudXP04qPyr", function (err) {
     if (err) throw err
 })
 
@@ -62,14 +62,13 @@ const geturl = async function (req, res) {
         console.log("send1")
         if(cache) {
             let cachedata = JSON.parse(cache)
-            return res.status(302).redirect(cachedata.longUrl)}
+            return res.status(301).redirect(cachedata.longUrl)}
         else{
             let data = await urlModel.findOne({urlCode: url})
             console.log(data)
-            console.log("send2")
             if(!data) return res.status(404).send({status:false, message: "url not found"})
             await SET_ASYNC(`${url}`, JSON.stringify(data))
-            return res.status(302).redirect(data.longUrl)
+            return res.status(301).redirect(data.longUrl)
         }
        
     }
