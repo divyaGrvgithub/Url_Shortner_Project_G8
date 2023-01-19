@@ -21,6 +21,12 @@ redisConnect.on("connect", async function () {
 const GET_ASYNC = promisify(redisConnect.GET).bind(redisConnect)
 const SET_ASYNC = promisify(redisConnect.SET).bind(redisConnect)
 
+const isValidUrl = function (value) {
+    const regEx = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
+    const result = regEx.test(value)
+    return result
+  }
+
 // <------------------------------Create ShortUrl----------------------------------->
 
 const shortUrl = async function (req, res) {
@@ -30,12 +36,14 @@ const shortUrl = async function (req, res) {
         if (Object.keys(data).length == 0) {
             return res.status(400).send({ status: false, message: "Please Enter Longurl to create shorturl" })
         }
+        if (Object.values(req.body) == 0){
+            return res.status(400).send({ status: false, message: "Please provide value" })
+        }
         if (!longUrl)
             return res.status(400).send({ status: false, message: "Please provide LongUrl" });
         if (!validator.isWebUri(longUrl)) {
             return res.status(400).send({ status: false, message: "Not a valid url" })
         }
-
         let cachedLongUrl = await GET_ASYNC(`${longUrl}`)
         let Link = JSON.parse(cachedLongUrl)
         if (Link) {
