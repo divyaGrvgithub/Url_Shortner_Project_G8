@@ -21,11 +21,6 @@ redisConnect.on("connect", async function () {
 const GET_ASYNC = promisify(redisConnect.GET).bind(redisConnect)
 const SET_ASYNC = promisify(redisConnect.SET).bind(redisConnect)
 
-const isValidUrl = function (value) {
-    const regEx = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/
-    const result = regEx.test(value)
-    return result
-  }
 
 // <------------------------------Create ShortUrl----------------------------------->
 
