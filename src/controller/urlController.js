@@ -3,7 +3,7 @@ const shortId = require('shortid')
 const validator = require('valid-url')
 const redis = require("redis")
 const { promisify } = require('util')
-const baseUrl = "http:/localhost:3000/"
+const baseUrl = "http://localhost:3000/"
 
 // <----------------------------Redis connection----------------------------------->
 
@@ -20,6 +20,7 @@ redisConnect.on("connect", async function () {
 
 const GET_ASYNC = promisify(redisConnect.GET).bind(redisConnect)
 const SET_ASYNC = promisify(redisConnect.SET).bind(redisConnect)
+
 // <------------------------------Create ShortUrl----------------------------------->
 
 const shortUrl = async function (req, res) {
@@ -42,22 +43,22 @@ const shortUrl = async function (req, res) {
         }
         let urlFound = await urlModel.findOne({ longUrl: longUrl })
         if (urlFound) {
-            return res.status(200).send({ status: true, data: { longUrl: urlFound.longUrl, shortUrl: urlFound.shortUrl, urlCode: urlFound.urlCode } })
+            return res.status(200).send({ status: true,message: "data already exist", data: { longUrl: urlFound.longUrl, shortUrl: urlFound.shortUrl, urlCode: urlFound.urlCode } })
         }
-        const urlCode = shortId.generate(longUrl);
+        const urlCode = shortId.generate(longUrl).toLowerCase();
         const shortUrl = baseUrl + urlCode;
-        const url = { longUrl: longUrl, urlCode: urlCode, shortUrl: shortUrl };
+        const url = { longUrl: longUrl, shortUrl: shortUrl , urlCode: urlCode };
 
         const Data = await urlModel.create(url)
         res.status(201).send({ status: true, data: { longUrl: Data.longUrl, shortUrl: Data.shortUrl, urlCode: Data.urlCode } });
-        await SET_ASYNC(`${longUrl}`, 86400, JSON.stringify(Data))
+        await SET_ASYNC(`${longUrl}`,JSON.stringify(Data))
     }
     catch (err) {
         res.status(500).send({ status: false, message: err.message })
     }
 };
 
-// <-----------------------------Get Url----------------------------------->
+// <-----------------------------------Get Url--------------------------------------->
 
 const getUrl = async function (req, res) {
     try {
@@ -76,8 +77,7 @@ const getUrl = async function (req, res) {
             if(!data) return res.status(404).send({status:false, message: "url not found"})
             await SET_ASYNC(`${url}`, JSON.stringify(data))
             return res.status(302).redirect(data.longUrl)
-        }
-       
+        }      
     }
     catch (err) {
         res.status(500).send({ status: false, message: err.message })
