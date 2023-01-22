@@ -4,6 +4,7 @@ const validator = require('valid-url')
 const redis = require("redis")
 const { promisify } = require('util')
 const baseUrl = "http://localhost:3000/"
+const axios=require('axios')
 
 // <----------------------------Redis connection----------------------------------->
 
